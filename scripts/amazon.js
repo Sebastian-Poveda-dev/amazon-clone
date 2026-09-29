@@ -44,10 +44,35 @@
         Added
       </div>
 
-      <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="e43638ce-6aa0-4b85-b27f-e1d07eb678c6">
+      <button class="add-to-cart-button button-primary js-add-to-cart" data-product-name="${product.name}">
         Add to Cart
       </button>
     </div>`;
  });
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+document.querySelectorAll('.js-add-to-cart').forEach((buttton) => {
+  buttton.addEventListener('click', () => {
+    const productName = buttton.dataset.productName;
+    let matchingItem;
+
+    cart.forEach((item) => {
+      if (productName === item.productName) {
+        matchingItem = item;
+      }
+    });
+
+    if (matchingItem) {
+      matchingItem.quantity += 1;
+    } else {
+      cart.push({
+      productName: productName,
+      quantity: 1,
+      });
+    }
+
+    console.log(cart);
+
+  });
+});
